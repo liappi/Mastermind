@@ -24,5 +24,17 @@ namespace MastermindTests {
             Assert.Equal(expected, actual);
         }
         
+        [Theory]
+        [InlineData(new[] {Colours.Red, Colours.Blue, Colours.Green, Colours.Orange},
+                    new[] {Colours.Blue, Colours.Green, Colours.Orange, Colours.Red}, 4)]
+        [InlineData(new[] {Colours.Red, Colours.Red, Colours.Red, Colours.Red},
+                    new[] {Colours.Red, Colours.Red, Colours.Blue, Colours.Blue}, 2)]
+        [InlineData(new[] {Colours.Red, Colours.Red, Colours.Red, Colours.Red},
+                    new[] {Colours.Red, Colours.Blue, Colours.Blue, Colours.Blue}, 1)]
+        public void GivenGuessShouldReturnNumberOfWhites(Colours[] secret, Colours[] guess, int expected) {
+            var game = new Game(secret);
+            var actual = game.GetNumberOfBlacks(guess);
+            Assert.Equal(expected, actual);
+        }
     }
 }

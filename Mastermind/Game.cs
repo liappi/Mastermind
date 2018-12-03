@@ -24,5 +24,11 @@ namespace Mastermind {
             
             return numberOfBlacks;
         }
+
+        public int GetNumberOfWhites(IEnumerable<Colours> guess) {
+            var numberOfWhites = 0;
+
+            return numberOfWhites;
+        }
     }
 }

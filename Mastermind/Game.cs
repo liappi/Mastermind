@@ -51,5 +51,9 @@ namespace Mastermind {
 
             return numberOfWhites;
         }
+
+        public void Play() {
+            throw new System.NotImplementedException();
+        }
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Mastermind;
 using Xunit;
 
@@ -70,6 +71,15 @@ namespace MastermindTests {
         public void GivenGuessShouldReturnIndexesOfBlacks(Colours[] secret, Colours[] guess, IEnumerable<int> expected) {
             var game = new Game(secret);
             var actual = game.GetIndexesOfBlacks(guess);
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void SecretGeneratedShouldHaveLengthOfFour() {
+            var secretGenerator = new SecretGenerator();
+            var secret = secretGenerator.GenerateSecret();
+            var expected = secret.Count();
+            var actual = 4;
             Assert.Equal(expected, actual);
         }
     }

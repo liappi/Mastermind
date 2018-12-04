@@ -3,7 +3,10 @@
 namespace Mastermind {
     class Program {
         static void Main(string[] args) {
-            Console.WriteLine("Hello World!");
+            var secretGenerator = new SecretGenerator();
+            var secret = secretGenerator.GenerateSecret();
+            var game = new Game(secret);
+            game.Play();
         }
     }
 }

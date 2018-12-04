@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Mastermind;
 using Xunit;
 
@@ -52,10 +53,23 @@ namespace MastermindTests {
                     new[] {Colours.Red, Colours.Blue, Colours.Green, Colours.Orange}, 0)]
         
         [InlineData(new[] {Colours.Red, Colours.Blue, Colours.Green, Colours.Orange},
-                    new[] {Colours.Red, Colours.Red, Colours.Purple, Colours.Purple}, 1)]
+                    new[] {Colours.Red, Colours.Red, Colours.Purple, Colours.Purple}, 0)]
         public void GivenGuessShouldReturnNumberOfWhites(Colours[] secret, Colours[] guess, int expected) {
             var game = new Game(secret);
             var actual = game.GetNumberOfWhites(guess);
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData(new[] {Colours.Red, Colours.Blue, Colours.Green, Colours.Orange},
+                    new[] {Colours.Red, Colours.Red, Colours.Purple, Colours.Purple}, 
+                    new[] {0})]
+        [InlineData(new[] {Colours.Red, Colours.Blue, Colours.Green, Colours.Orange},
+                    new[] {Colours.Red, Colours.Blue, Colours.Purple, Colours.Purple}, 
+                    new[] {0, 1})]
+        public void GivenGuessShouldReturnIndexesOfBlacks(Colours[] secret, Colours[] guess, IEnumerable<int> expected) {
+            var game = new Game(secret);
+            var actual = game.GetIndexesOfBlacks(guess);
             Assert.Equal(expected, actual);
         }
     }

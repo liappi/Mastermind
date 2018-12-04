@@ -14,8 +14,10 @@ namespace MastermindTests {
         [Theory]
         [InlineData(new[] {Colours.Red, Colours.Blue, Colours.Green, Colours.Orange},
                     new[] {Colours.Red, Colours.Blue, Colours.Green, Colours.Orange}, 4)]
+        
         [InlineData(new[] {Colours.Purple, Colours.Blue, Colours.Green, Colours.Orange},
                     new[] {Colours.Red, Colours.Blue, Colours.Green, Colours.Orange}, 3)]
+        
         [InlineData(new[] {Colours.Purple, Colours.Purple, Colours.Purple, Colours.Purple},
                     new[] {Colours.Red, Colours.Blue, Colours.Green, Colours.Orange}, 0)]
         public void GivenGuessShouldReturnNumberOfBlacks(Colours[] secret, Colours[] guess, int expected) {
@@ -27,13 +29,33 @@ namespace MastermindTests {
         [Theory]
         [InlineData(new[] {Colours.Red, Colours.Blue, Colours.Green, Colours.Orange},
                     new[] {Colours.Blue, Colours.Green, Colours.Orange, Colours.Red}, 4)]
+        
+        [InlineData(new[] {Colours.Red, Colours.Blue, Colours.Green, Colours.Orange},
+                    new[] {Colours.Purple, Colours.Red, Colours.Purple, Colours.Purple}, 1)]
+        
+        [InlineData(new[] {Colours.Red, Colours.Red, Colours.Green, Colours.Orange},
+                    new[] {Colours.Purple, Colours.Red, Colours.Green, Colours.Orange}, 0)]
+        
+        [InlineData(new[] {Colours.Purple, Colours.Red, Colours.Green, Colours.Orange},
+                    new[] {Colours.Red, Colours.Red, Colours.Green, Colours.Orange}, 0)]
+        
         [InlineData(new[] {Colours.Red, Colours.Red, Colours.Red, Colours.Red},
-                    new[] {Colours.Red, Colours.Red, Colours.Blue, Colours.Blue}, 2)]
+                    new[] {Colours.Red, Colours.Red, Colours.Blue, Colours.Blue}, 0)]
+        
         [InlineData(new[] {Colours.Red, Colours.Red, Colours.Red, Colours.Red},
-                    new[] {Colours.Red, Colours.Blue, Colours.Blue, Colours.Blue}, 1)]
+                    new[] {Colours.Red, Colours.Blue, Colours.Blue, Colours.Blue}, 0)]
+        
+        [InlineData(new[] {Colours.Red, Colours.Red, Colours.Red, Colours.Red},
+                    new[] {Colours.Blue, Colours.Blue, Colours.Blue, Colours.Blue}, 0)]
+        
+        [InlineData(new[] {Colours.Red, Colours.Blue, Colours.Green, Colours.Orange},
+                    new[] {Colours.Red, Colours.Blue, Colours.Green, Colours.Orange}, 0)]
+        
+        [InlineData(new[] {Colours.Red, Colours.Blue, Colours.Green, Colours.Orange},
+                    new[] {Colours.Red, Colours.Red, Colours.Purple, Colours.Purple}, 1)]
         public void GivenGuessShouldReturnNumberOfWhites(Colours[] secret, Colours[] guess, int expected) {
             var game = new Game(secret);
-            var actual = game.GetNumberOfBlacks(guess);
+            var actual = game.GetNumberOfWhites(guess);
             Assert.Equal(expected, actual);
         }
     }

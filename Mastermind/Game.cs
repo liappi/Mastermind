@@ -25,8 +25,26 @@ namespace Mastermind {
             return numberOfBlacks;
         }
 
+        public List<int> GetIndexesOfBlacks(IEnumerable<Colours> guess) {
+            var indexesOfBlacks = new List<int>();
+            
+            for (var i = 0; i < guess.Count(); i++) {
+                if (guess.ElementAt(i) == secret.ElementAt(i)) {
+                    indexesOfBlacks.Add(i);
+                }
+            }
+
+            return indexesOfBlacks;
+        }
+
         public int GetNumberOfWhites(IEnumerable<Colours> guess) {
             var numberOfWhites = 0;
+
+            for (var i = 0; i < guess.Count(); i++) {
+                if (secret.Contains(guess.ElementAt(i)) && secret.ElementAt(i) != guess.ElementAt(i)) {
+                    numberOfWhites++;
+                }
+            }
 
             return numberOfWhites;
         }

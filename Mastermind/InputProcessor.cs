@@ -4,11 +4,10 @@ using System.Linq;
 
 namespace Mastermind {
     public class InputProcessor {
-        public IEnumerable<Colours> ProcessInput(string userInput) {
-            var inputs = userInput.Split(',').ToList();
+        public IEnumerable<Colours> ProcessInput(IEnumerable<string> userInput) {
             var guess = new List<Colours>();
             
-            foreach (var input in inputs) {
+            foreach (var input in userInput) {
                 Enum.TryParse(input, out Colours colour);
                 guess.Add(colour);
             }

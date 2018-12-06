@@ -57,7 +57,7 @@ namespace Mastermind {
             Console.WriteLine("Here's an example guess: RED,GREEN,BLUE,YELLOW");
 
             while (!gameOver) {
-                var guess = ElicitInput();
+                var guess = ElicitValidInput();
                 var numberOfBlacks = GetNumberOfBlacks(guess);
                 var numberOfWhites = GetNumberOfWhites(guess);
                 Console.WriteLine("The number of Blacks is: " + numberOfBlacks);
@@ -71,21 +71,19 @@ namespace Mastermind {
             Console.WriteLine("WON!");
         }
 
-        private IEnumerable<Colours> ElicitInput() {
-            Console.WriteLine("Please enter your guess.");
-            var input = Console.ReadLine();
-            var inputs = input.Split(',');
+        private IEnumerable<Colours> ElicitValidInput() {
             var inputValidator = new InputValidator();
             var inputProcessor = new InputProcessor();
+            
+            Console.WriteLine("Please enter your guess.");
+            var input = Console.ReadLine().Split(',');
 
-            while (!inputValidator.HasValidNumberOfColours(inputs) || !inputValidator.HasValidColours(inputs)) {
+            while (!inputValidator.HasValidNumberOfColours(input) || !inputValidator.HasValidColours(input)) {
                 Console.WriteLine("Please enter another guess.");
-                input = Console.ReadLine();
-                inputs = input.Split(',');
+                input = Console.ReadLine().Split(',');
             }
 
-            var guess = inputProcessor.ProcessInput(input);
-            return guess;
+            return inputProcessor.ProcessInput(input);
         }
     }
 }

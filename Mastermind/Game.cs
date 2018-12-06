@@ -1,17 +1,17 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Mastermind {
     public class Game {
         private IEnumerable<Colours> secret;
+        private bool gameOver;
 
         public Game(IEnumerable<Colours> secret) {
             this.secret = secret;
+            gameOver = false;
         }
         
-        public static bool HasValidNumberOfColours(IEnumerable<Colours> guess) {
-            return guess.Count() == 4;
-        }
 
         public int GetNumberOfBlacks(IEnumerable<Colours> guess) {
             var numberOfBlacks = 0;
@@ -53,7 +53,42 @@ namespace Mastermind {
         }
 
         public void Play() {
-            throw new System.NotImplementedException();
+            Console.WriteLine("Welcome to Mastermind!");
+            Console.WriteLine("Here's an example guess: RED,GREEN,BLUE,YELLOW");
+
+            while (!gameOver) {
+                var guess = ElicitInput();
+                var numberOfBlacks = GetNumberOfBlacks(guess);
+                var numberOfWhites = GetNumberOfBlacks(guess);
+                Console.WriteLine("The number of Blacks is: " + numberOfBlacks);
+                Console.WriteLine("The number of Whites is: " + numberOfWhites);
+
+                if (numberOfBlacks == 4) {
+                    gameOver = true;
+                }
+            }
+
+            Console.WriteLine("WON!");
         }
+
+//        private IEnumerable<Colours> ElicitInput() {
+//            
+//        }
+
+//        private IEnumerable<Colours> GetInput() {
+//            var input = Console.ReadLine();
+//            var inputs = input.Split(',').ToList();
+//            var guess = new List<Colours>();
+//            
+//            foreach (var element in inputs) {
+//                Enum.TryParse(element, out Colours colour);
+//                guess.Add(colour);
+//            }
+//
+//            return guess;
+//        }
+        
+        
+        
     }
 }

@@ -6,10 +6,18 @@ namespace Mastermind {
     public class Game {
         private IEnumerable<Colours> secret;
         private bool gameOver;
+        private Renderer renderer;
+        private InputProcessor inputProcessor;
+        private InputValidator inputValidator;
+        private int numberOfGuessesMade;
 
         public Game(IEnumerable<Colours> secret) {
             this.secret = secret;
             gameOver = false;
+            renderer = new Renderer();
+            inputProcessor = new InputProcessor();
+            inputValidator = new InputValidator();
+            numberOfGuessesMade = 0;
         }
         
 
@@ -53,37 +61,50 @@ namespace Mastermind {
         }
 
         public void Play() {
-            Console.WriteLine("Welcome to Mastermind!");
-            Console.WriteLine("Here's an example guess: RED,GREEN,BLUE,YELLOW");
+            renderer.PrintWelcomeMessage();
 
             while (!gameOver) {
                 var guess = ElicitValidInput();
                 var numberOfBlacks = GetNumberOfBlacks(guess);
                 var numberOfWhites = GetNumberOfWhites(guess);
-                Console.WriteLine("The number of Blacks is: " + numberOfBlacks);
-                Console.WriteLine("The number of Whites is: " + numberOfWhites);
+                renderer.PrintNumberOfBlacksAndWhites(numberOfBlacks, numberOfWhites);
+                
+                numberOfGuessesMade++;
+                
+                if (numberOfGuessesMade > 60) {
+                    gameOver = true;
+                    renderer.PrintLossDueToTooManyGuessesMessage();
+                }
 
                 if (numberOfBlacks == 4) {
                     gameOver = true;
+                    renderer.PrintWinMessage();
                 }
             }
-
-            Console.WriteLine("WON!");
         }
 
         private IEnumerable<Colours> ElicitValidInput() {
-            var inputValidator = new InputValidator();
-            var inputProcessor = new InputProcessor();
-            
-            Console.WriteLine("Please enter your guess.");
-            var input = Console.ReadLine().Split(',');
+            renderer.PrintEnterFirstGuessMessage();
+            var input = renderer.GetInput().Split(',');
 
             while (!inputValidator.HasValidNumberOfColours(input) || !inputValidator.HasValidColours(input)) {
-                Console.WriteLine("Please enter another guess.");
-                input = Console.ReadLine().Split(',');
+                PrintApplicableErrorMessages(input);
+                
+                renderer.PrintEnterAnotherGuessMessage();
+                input = renderer.GetInput().Split(',');
             }
 
             return inputProcessor.ProcessInput(input);
+        }
+
+        private void PrintApplicableErrorMessages(IEnumerable<string> input) {
+            if (!inputValidator.HasValidNumberOfColours(input)) {
+                renderer.PrintHasInvalidNumberOfColoursInGuessMessage();
+            }
+
+            if (!inputValidator.HasValidColours(input)) {
+                renderer.PrintHasInvalidColourInGuessMessage();
+            }
         }
     }
 }

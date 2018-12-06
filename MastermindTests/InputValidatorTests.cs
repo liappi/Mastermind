@@ -4,11 +4,22 @@ using Xunit;
 namespace MastermindTests {
     public class InputValidatorTests {
         [Theory]
-        [InlineData(new[] {Colours.GREEN, Colours.GREEN, Colours.GREEN, Colours.GREEN}, true)]
-        [InlineData(new[] {Colours.GREEN, Colours.GREEN, Colours.GREEN}, false)]
-        public void GivenGuessShouldReturnHasValidNumberOfColours(Colours[] guess, bool expected) {
+        [InlineData(new[] {"GREEN", "GREEN", "GREEN", "GREEN"}, true)]
+        [InlineData(new[] {"GREEN", "GREEN", "GREEN"}, false)]
+        public void GivenGuessShouldReturnHasValidNumberOfColours(string[] guess, bool expected) {
             var inputValidator = new InputValidator();
             var actual = inputValidator.HasValidNumberOfColours(guess);
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData(new[] {"RED", "BLUE", "GREEN", "GREEN"}, true)]
+        [InlineData(new[] {"PINK", "BLUE", "GREEN", "GREEN"}, false)]
+        [InlineData(new[] {"RED", "something", "GREEN", "GREEN"}, false)]
+        [InlineData(new[] {"red", "BLUE", "GREEN", "GREEN"}, false)]
+        public void GivenGuessShouldReturnHasValidColours(string[] guess, bool expected) {
+            var inputValidator = new InputValidator();
+            var actual = inputValidator.HasValidColours(guess);
             Assert.Equal(expected, actual);
         }
 

@@ -71,9 +71,11 @@ namespace Mastermind {
             Console.WriteLine("WON!");
         }
 
-//        private IEnumerable<Colours> ElicitInput() {
-//            
-//        }
+        private IEnumerable<Colours> ElicitInput() {
+            var input = Console.ReadLine();
+
+            return new List<Colours>();
+        }
 
 //        private IEnumerable<Colours> GetInput() {
 //            var input = Console.ReadLine();

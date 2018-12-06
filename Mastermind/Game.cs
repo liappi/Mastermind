@@ -59,7 +59,7 @@ namespace Mastermind {
             while (!gameOver) {
                 var guess = ElicitInput();
                 var numberOfBlacks = GetNumberOfBlacks(guess);
-                var numberOfWhites = GetNumberOfBlacks(guess);
+                var numberOfWhites = GetNumberOfWhites(guess);
                 Console.WriteLine("The number of Blacks is: " + numberOfBlacks);
                 Console.WriteLine("The number of Whites is: " + numberOfWhites);
 
@@ -72,25 +72,20 @@ namespace Mastermind {
         }
 
         private IEnumerable<Colours> ElicitInput() {
+            Console.WriteLine("Please enter your guess.");
             var input = Console.ReadLine();
+            var inputs = input.Split(',');
+            var inputValidator = new InputValidator();
+            var inputProcessor = new InputProcessor();
 
-            return new List<Colours>();
+            while (!inputValidator.HasValidNumberOfColours(inputs) || !inputValidator.HasValidColours(inputs)) {
+                Console.WriteLine("Please enter another guess.");
+                input = Console.ReadLine();
+                inputs = input.Split(',');
+            }
+
+            var guess = inputProcessor.ProcessInput(input);
+            return guess;
         }
-
-//        private IEnumerable<Colours> GetInput() {
-//            var input = Console.ReadLine();
-//            var inputs = input.Split(',').ToList();
-//            var guess = new List<Colours>();
-//            
-//            foreach (var element in inputs) {
-//                Enum.TryParse(element, out Colours colour);
-//                guess.Add(colour);
-//            }
-//
-//            return guess;
-//        }
-        
-        
-        
     }
 }
